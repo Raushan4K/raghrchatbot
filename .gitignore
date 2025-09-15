@@ -5,9 +5,6 @@
 __pycache__/
 *.pyc
 
-# Data files (if large or private)
-data/
-
 # Other system files
 .DS_Store
 *.log
