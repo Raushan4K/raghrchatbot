@@ -26,10 +26,10 @@ if st.button("Ask"):
             st.subheader("Answer:")
             st.write(data.get("answer", "No answer received."))
 
-            st.subheader("Source Text:")
+            # st.subheader("Source Text:")
             # Show truncated source, with expand option
-            with st.expander("Show context"):
-                st.write(data.get("context", "No context available."))
+            # with st.expander("Show context"):
+            #     st.write(data.get("context", "No context available."))
 
         except requests.exceptions.RequestException as e:
             st.error(f"API request failed: {e}")

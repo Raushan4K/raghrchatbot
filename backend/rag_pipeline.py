@@ -52,14 +52,18 @@ class RAGPipeline:
     def generate_answer(self, query, context):
         # Construct prompt for Groq LLM
         prompt = (
-            "You are an HR policy assistant. Use ONLY the provided context to answer the question. "
-            "If the answer is not in the context, reply 'The answer is not available in the policy.'\n"
+            "You are an HR policy assistant. Use ONLY the provided context to answer the question."
+            "Analyze the given context and generate the response basis of the user queries. If exact answers is not available then analyze the context and try to find the hidden meaning of the context , if needed ,do mathematical calculations as well" 
+            "if the generated response is more than 1000 words then summarize the response for the final output."
+            "If the answer is not  related  anywhere in the context, reply 'The answer is not available in the policy.'\n"
+            
             f"Context:\n{context}\n\nQ: {query}\nA:"
         )
 
         completion = self.client.chat.completions.create(
             model=self.llm_model,
-            messages=[{"role": "user", "content": prompt}]
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.5
         )
         return completion.choices[0].message.content.strip()
 
@@ -70,7 +74,7 @@ class RAGPipeline:
 
 if __name__ == "__main__":
     pipeline = RAGPipeline()
-    test_query = "What is the leave policy for new employees?"
+    test_query = "when is the holi ?"
     answer, ctx = pipeline.query(test_query)
     print("Answer:", answer)
-    print("Context fetched:", ctx[:500], "...")
+    # print("Context fetched:", ctx[:500], "...")
